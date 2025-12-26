@@ -1,0 +1,151 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block content %}
+<!doctype html>
+<html lang="en">
+<head>
+  
+</head>
+
+	<body>
+
+		{% if messages %}
+		<div style="position: fixed; top: 80px; right: 20px; z-index: 9999; max-width: 400px;">
+			{% for message in messages %}
+			<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" style="margin-bottom: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 15px 20px; border-radius: 8px;">
+				{{ message }}
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+			{% endfor %}
+		</div>
+		<script>
+		setTimeout(function() {
+			let alerts = document.querySelectorAll('.alert');
+			alerts.forEach(function(alert) {
+				let bsAlert = new bootstrap.Alert(alert);
+				bsAlert.close();
+			});
+		}, 5000);
+		</script>
+		{% endif %}
+
+		 
+		<!-- Start Hero Section -->
+			<div class="hero">
+				<div class="container">
+					<div class="row justify-content-between">
+						<div class="col-lg-5">
+							<div class="intro-excerpt">
+								<h1>Products</h1>
+							</div>
+						</div>
+						<div class="col-lg-7">
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		<!-- End Hero Section -->
+
+		
+
+		<div class="untree_co-section product-section before-footer-section">
+		    <div class="container">
+		      	<div class="row">
+
+		      		<!-- Start Category Sidebar -->
+					<div class="col-lg-3 mb-5">
+    <div class="left_sidebar_area" style="background: #ffffff; padding: 15px; border-radius: 8px; box-shadow: 0 1px 5px rgba(0, 0, 0, 0.08);">
+        <aside class="left_widgets p_filter_widgets">
+            <div class="l_w_title" style="margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid #f0f0f0;">
+                <h3 style="font-size: 16px; font-weight: 600; color: #2f2f2f; margin: 0;">Browse Categories</h3>
+            </div>
+            <div class="widgets_inner">
+                <ul class="list" style="list-style: none; padding: 0; margin: 0;">
+                    <li style="margin-bottom: 8px;">
+                        <a href="{% url 'shop' %}" style="display: flex; align-items: center; padding: 8px 10px; background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 6px; text-decoration: none; color: #495057; font-weight: 500; font-size: 14px; transition: all 0.3s ease;">
+                            <span style="width: 16px; height: 16px; border: 2px solid #3b5d50; border-radius: 50%; margin-right: 10px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <span style="width: 8px; height: 8px; background: #3b5d50; border-radius: 50%; opacity: 0; transition: opacity 0.3s ease;"></span>
+                            </span>
+                            <span>All</span>
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 8px;">
+                        <a href="{% url 'chair' %}" style="display: flex; align-items: center; padding: 8px 10px; background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 6px; text-decoration: none; color: #495057; font-weight: 500; font-size: 14px; transition: all 0.3s ease;">
+                            <span style="width: 16px; height: 16px; border: 2px solid #3b5d50; border-radius: 50%; margin-right: 10px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <span style="width: 8px; height: 8px; background: #3b5d50; border-radius: 50%; opacity: 0; transition: opacity 0.3s ease;"></span>
+                            </span>
+                            <span>Chair</span>
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 8px;">
+                        <a href="{% url 'sofa' %}" style="display: flex; align-items: center; padding: 8px 10px; background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 6px; text-decoration: none; color: #495057; font-weight: 500; font-size: 14px; transition: all 0.3s ease;">
+                            <span style="width: 16px; height: 16px; border: 2px solid #3b5d50; border-radius: 50%; margin-right: 10px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <span style="width: 8px; height: 8px; background: #3b5d50; border-radius: 50%; opacity: 0; transition: opacity 0.3s ease;"></span>
+                            </span>
+                            <span>Sofa</span>
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 8px;">
+                        <a href="{% url 'bed' %}" style="display: flex; align-items: center; padding: 8px 10px; background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 6px; text-decoration: none; color: #495057; font-weight: 500; font-size: 14px; transition: all 0.3s ease;">
+                            <span style="width: 16px; height: 16px; border: 2px solid #3b5d50; border-radius: 50%; margin-right: 10px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <span style="width: 8px; height: 8px; background: #3b5d50; border-radius: 50%; opacity: 0; transition: opacity 0.3s ease;"></span>
+                            </span>
+                            <span>Bed</span>
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 0;">
+                        <a href="{% url 'table' %}" style="display: flex; align-items: center; padding: 8px 10px; background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 6px; text-decoration: none; color: #495057; font-weight: 500; font-size: 14px; transition: all 0.3s ease;">
+                            <span style="width: 16px; height: 16px; border: 2px solid #3b5d50; border-radius: 50%; margin-right: 10px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <span style="width: 8px; height: 8px; background: #3b5d50; border-radius: 50%; opacity: 0; transition: opacity 0.3s ease;"></span>
+                            </span>
+                            <span>Table</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+</div>
+
+<style>
+.left_sidebar_area a:hover {
+    background: #e9f5f0 !important;
+    border-color: #3b5d50 !important;
+    color: #3b5d50 !important;
+}
+
+.left_sidebar_area a:hover span span {
+    opacity: 1 !important;
+}
+</style>
+					<!-- End Category Sidebar -->
+
+		      		<!-- Start Column 1 -->
+				 
+					{% for i in products %}
+					<div class="col-12 col-md-4 col-lg-3 mb-5">
+						<a class="product-item" href="{% url "product-details" pk=i.pk %}">
+							<img src="{{i.product_image.url}}" class="img-fluid product-thumbnail">
+							<h3 class="product-title">{{i.product_name}}</h3>
+							<strong class="product-price">${{i.product_price}}</strong>
+
+							<span class="icon-cross">
+								<img src="{% static 'images/eye.svg' %}" class="img-fluid">
+							</span>
+						</a>
+					</div> 
+					{% endfor %}
+				 
+<!-- End Column 1 -->
+
+		      	</div>
+		    </div>
+		</div>
+
+
+		 
+	</body>
+
+</html>
+{% endblock %}

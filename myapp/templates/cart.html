@@ -1,0 +1,216 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block content %}
+<!doctype html>
+<html lang="en">
+<head>
+	 <script src="https://js.stripe.com/v3/"></script>
+  
+	</head>
+
+	<body>
+
+		 
+
+		<!-- Start Hero Section -->
+			<div class="hero">
+				<div class="container">
+					<div class="row justify-content-between">
+						<div class="col-lg-5">
+							<div class="intro-excerpt">
+								<h1>Cart</h1>
+							</div>
+						</div>
+						<div class="col-lg-7">
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		<!-- End Hero Section -->
+
+		
+
+		<div class="untree_co-section before-footer-section">
+            <div class="container">
+              {% if not carts %}
+              <div class="alert alert-info text-center">
+                  Your cart is empty. <a href="{% url 'shop' %}">Start shopping!</a>
+              </div>
+              {% else %}
+              <div class="row mb-5">
+                <div class="col-md-12">
+                  <div class="site-blocks-table">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th class="product-thumbnail">Image</th>
+                          <th class="product-name">Product</th>
+                          <th class="product-price">Price</th>
+                          <th class="product-quantity">Quantity</th>
+                          <th class="product-total">Total</th>
+                          <th class="product-remove">Remove</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+						{% for i in carts %}
+                        <tr>
+                          <td class="product-thumbnail">
+                            <img src="{{i.product.product_image.url}}"
+							style="height:150px;width:150px"
+							
+							alt="Image" class="img-fluid">
+                          </td>
+                          <td class="product-name">
+                            <h2 class="h5 text-black">{{i.product.product_name}}</h2>
+                          </td>
+                          <td>${{i.product.product_price}}</td>
+                          <td>
+                            <div class="input-group mb-3 d-flex align-items-center quantity-container" style="max-width: 120px;">
+                            <form method="post" action="{% url 'change-qty' %}">
+								{% csrf_token %}
+								<input type="hidden" name="cid" value="{{i.pk}}">
+								<input type="number" name="product_qty" value="{{i.product_qty}}" min="1" max="10" onchange="this.form.submit();">
+							</form> 
+                            </div>
+        
+                          </td>
+                          <td>${{i.total_price}}</td>
+                          <td>
+                            <a href="{% url 'remove-from-cart' i.product.pk %}" class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                          </td>
+                        </tr>
+						{% endfor %}
+         
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+        
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="row mb-5">
+                    <div class="col-md-6 mb-3 mb-md-0">
+                      <a href="{% url 'cart' %}" class="btn btn-black btn-sm btn-block">Update Cart</a>
+                    </div>
+                    <div class="col-md-6">
+                      <a href="{% url 'shop' %}" class="btn btn-outline-black btn-sm btn-block">Continue Shopping</a>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label class="text-black h4" for="coupon">Coupon</label>
+                      <p>Enter your coupon code if you have one.</p>
+                    </div>
+                    <div class="col-md-8 mb-3 mb-md-0">
+                      <input type="text" class="form-control py-3" id="coupon" placeholder="Coupon Code">
+                    </div>
+                    <div class="col-md-4">
+                      <button class="btn btn-black">Apply Coupon</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 pl-5">
+                  <div class="row justify-content-end">
+                    <div class="col-md-7">
+                      <div class="row">
+                        <div class="col-md-12 text-right border-bottom mb-5">
+                          <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <div class="col-md-6">
+                          <span class="text-black">Subtotal</span>
+                        </div>
+                        <div class="col-md-6 text-right">
+                          <strong class="text-black">${{net_price}}</strong>
+                        </div>
+                      </div>
+                      <div class="row mb-5">
+                        <div class="col-md-6">
+                          <span class="text-black">Total</span>
+                        </div>
+                        <div class="col-md-6 text-right">
+                          <strong class="text-black">${{net_price}}</strong>
+                        </div>
+                      </div>
+        
+                      <div class="row">
+                       <div class="checkout_btn_inner">
+                      <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" id="net_price" name="amount" value="{{net_price}}">
+                        <button class="main_btn" type="button" id="checkout-button">Proceed Checkout</button>
+                      </form>
+                    </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+<script type="text/javascript">
+
+var stripe = Stripe('pk_test_51Sevc0K2fcwg7q1KPGPcP0BggjT7PH4kwD5wmG6UUspUzUzHpZP7tTr6CFrs46d0Q1Gb9V36uoQP3tbDVWAV4HHg00gU53jOXx');
+var checkoutButton = document.getElementById('checkout-button');
+
+// Get CSRF token
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+const csrftoken = getCookie('csrftoken');
+
+if (checkoutButton) {
+    checkoutButton.addEventListener('click', function() { 
+        fetch('/create-checkout-session/', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': csrftoken
+            },
+            body: JSON.stringify({'post_data': '{{net_price}}'})
+        })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(session) {
+            return stripe.redirectToCheckout({ sessionId: session.id });
+        })
+        .then(function(result) {
+            if (result.error) {
+                alert(result.error.message);
+            }
+        })
+        .catch(function(error) {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
+    });
+}
+</script>
+		
+
+		 
+	</body>
+
+</html>
+{% endblock %}
