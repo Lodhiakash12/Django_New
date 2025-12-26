@@ -125,7 +125,8 @@ def login(request):
 def logout(request):
     try:
         del request.session['email']       
-        del request.session['fname']    
+        del request.session['fname']  
+        del request.session['lname']   
         del request.session['profile_picture'] 
     except:
         pass
