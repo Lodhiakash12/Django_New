@@ -148,8 +148,8 @@ def profile(request):
             user.profile_picture = request.FILES['profile_picture']
         except:
             pass
-        user.save()
-        request.session['fname'] = user.fname  # Fixed: Update fname in session
+        user.save() 
+        request.session['fname'] = user.fname   
         request.session['profile_picture'] = user.profile_picture.url
         msg = "Profile updated successfully" 
         if user.usertype == "buyer":
@@ -163,7 +163,7 @@ def profile(request):
             return render(request, 'seller-profile.html', {'user': user})
 
 def change_password(request):
-    # Fixed: Check if user is logged in
+  
     if 'email' not in request.session:
         return redirect('login')
     
@@ -387,7 +387,9 @@ def cart(request):
         user = User.objects.get(email=request.session['email'])
         carts = Cart.objects.filter(user=user, payment_status=False)
         
-        # Calculate net price
+        
+        
+        
         net_price = 0
         for cart_item in carts:
             # Ensure total_price is calculated
